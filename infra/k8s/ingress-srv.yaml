@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+spec:
+  ingressClassName: nginx # Use spec.ingressClassName instead of annotation
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /api/
+            pathType: Prefix # Use Prefix without regex for matching
+            backend:
+              service:
+                name: server-srv
+                port:
+                  number: 3000 # Assuming port 80, adjust if needed
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000 # Assuming port 80, adjust if needed
+
